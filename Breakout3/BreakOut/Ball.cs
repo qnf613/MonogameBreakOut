@@ -70,13 +70,22 @@ namespace BreakOut
 
         public override void Update(GameTime gameTime)
         {
+            //Check if ball is on paddle
             if (this.State == BallState.OnPaddle)
             {
                 base.Update(gameTime);
                 return;
             }
+            //Move Ball
             this.Location += this.Direction * (this.Speed * gameTime.ElapsedGameTime.Milliseconds / 1000);
 
+            UpdateBallCheckWalls(gameTime);
+
+            base.Update(gameTime);
+        }
+
+        private void UpdateBallCheckWalls(GameTime gameTime)
+        {
             //bounce off wall
             //Left and Right
             if ((this.Location.X + this.spriteTexture.Width > this.Game.GraphicsDevice.Viewport.Width)
@@ -87,23 +96,22 @@ namespace BreakOut
             }
             //bottom Miss
             if (this.Location.Y + this.spriteTexture.Height > this.Game.GraphicsDevice.Viewport.Height)
-              
+
             {
+                //TODO Lose Life
                 this.resetBall(gameTime);
             }
 
             //Top
-            if  (this.Location.Y < 0)
+            if (this.Location.Y < 0)
             {
                 this.Direction.Y *= -1;
             }
-
-            base.Update(gameTime);
         }
 
         internal void Reflect(Block b)
         {
-            this.Direction.Y *= -1; //TODO side collision
+            this.Direction.Y *= -1; //TODO check for side collision with block
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BreakOut
         PaddleController controller;
 
         Ball ball;      //Need refernce to ball for collision
-        Rectangle top;  //Regatngle for paddle collision
+        Rectangle top;  //Regatngle for paddle collision we are using a smaller rectangle on the top of the paddle for collision
         
         public Paddle(Game game, Ball b)
             : base(game)
@@ -38,7 +38,7 @@ namespace BreakOut
 
         protected override void LoadContent()
         {
-            this.spriteTexture = this.Game.Content.Load<Texture2D>("paddleSmall");
+            this.spriteTexture = this.Game.Content.Load<Texture2D>("paddleSmall");      //default paddle is small may subclass for differnt paddles
             base.LoadContent();
         }
 

@@ -17,8 +17,8 @@ namespace BreakOut
         PaddleController controller;
 
         Ball ball;      //Need refernce to ball for collision
-        Rectangle top;  //Regatngle for paddle collision
-        
+        Rectangle top;  //Regatngle for paddle collision we are using a smaller rectangle on the top of the paddle for collision
+
         public Paddle(Game game, Ball b)
             : base(game)
         {
@@ -31,14 +31,14 @@ namespace BreakOut
             {
                 console = new GameConsole(this.Game);
                 this.Game.Components.Add(console);  //add a new game console to Game
-                
+
             }
-            //this.ShowMarkers = true;
+            this.ShowMarkers = true;
         }
 
         protected override void LoadContent()
         {
-            this.spriteTexture = this.Game.Content.Load<Texture2D>("paddleSmall");
+            this.spriteTexture = this.Game.Content.Load<Texture2D>("paddleSmall");      //default paddle is small may subclass for differnt paddles
             base.LoadContent();
         }
 
@@ -49,7 +49,7 @@ namespace BreakOut
             this.Direction = controller.Direction;
 
             //Collision Rect
-            top = new Rectangle((int)this.Location.X, (int) this.Location.Y, this.spriteTexture.Width, 1);
+            top = new Rectangle((int)this.Location.X, (int)this.Location.Y, this.spriteTexture.Width, 1);
 
             if (ball.State == BallState.OnPaddle)
             {
@@ -71,7 +71,7 @@ namespace BreakOut
                 }
             }
 
-            this.Location += this.Direction * (this.Speed * gameTime.ElapsedGameTime.Milliseconds/1000);
+            this.Location += this.Direction * (this.Speed * gameTime.ElapsedGameTime.Milliseconds / 1000);
             KeepPaddleOnScreen();
             base.Update(gameTime);
         }

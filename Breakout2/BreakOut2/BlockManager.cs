@@ -12,23 +12,28 @@ namespace BreakOut
     class BlockManager : GameComponent
     {
 
-        public List<Block> Blocks { get; private set; }
-        Ball ball;
-        List<Block> blocksToRemove;
-        bool reflected;
-        
-        public BlockManager(Game game, Ball b)
+        public List<Block> Blocks { get; private set; }     //Blocks managed by block manager
+        Ball ball;                                          //Reference to ball for collision
+        List<Block> blocksToRemove;                         //List of blocks to remove after they have been hit ny the ball
+        bool reflected;                                     //Bool to make sure ball is only reflected by a one block per update. The ball may hit two blocks at once
+
+        /// <summary>
+        /// BlockManager hold a list of blocks and handles updating, drawing a block collision
+        /// </summary>
+        /// <param name="game">Reference to Game</param>
+        /// <param name="ball">Refernce to Ball for collision</param>
+        public BlockManager(Game game, Ball ball)
             : base(game)
         {
             this.Blocks = new List<Block>();
             this.blocksToRemove = new List<Block>();
-            this.ball = b;
+            this.ball = ball;
         }
 
         public override void Initialize()
         {
-            LoadLevel();
-            
+            LoadLevel();        //Load a simple level
+
             base.Initialize();
         }
 
@@ -40,6 +45,12 @@ namespace BreakOut
             CreateBlockArrayByWidthAndHeight(24, 2, 1);
         }
 
+        /// <summary>
+        /// Simple Level lays out multiple levels of blocks
+        /// </summary>
+        /// <param name="width">Number of blocks wide</param>
+        /// <param name="height">Number of blocks high</param>
+        /// <param name="margin">space between blocks</param>
         private void CreateBlockArrayByWidthAndHeight(int width, int height, int margin)
         {
             Block b;
@@ -83,7 +94,7 @@ namespace BreakOut
             foreach (var block in blocksToRemove)
             {
                 Blocks.Remove(block);
-                
+
             }
             blocksToRemove.Clear(); //empty broken blocks array
 
@@ -94,7 +105,8 @@ namespace BreakOut
         {
             foreach (var block in Blocks)
             {
-                if(block.Visible)
+                //Only draw visible blocks
+                if (block.Visible)
                 {
                     block.Draw(sb);
                 }
