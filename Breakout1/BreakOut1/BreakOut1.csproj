@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5C19DBF1-608B-4838-B0A2-9E2D75D0BF80}</ProjectGuid>
+    <ProjectGuid>{EEC9ADBC-22DF-43FA-82DF-CBC5C0CED657}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BreakOut1</RootNamespace>
@@ -37,8 +37,12 @@
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Ball.cs" />
+    <Compile Include="Block.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Paddle.cs" />
     <Compile Include="PaddleController.cs" />
@@ -53,23 +57,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\ballBig.png" />
-    <Content Include="Content\ballSmall.png" />
-    <Content Include="Content\block_blue.png" />
-    <Content Include="Content\block_bubble.png" />
-    <Content Include="Content\block_bubbleBig.png" />
-    <Content Include="Content\block_earth.png" />
-    <Content Include="Content\block_greenWaveBig.png" />
-    <Content Include="Content\block_greenWaveSmall.png" />
-    <Content Include="Content\block_red.png" />
-    <Content Include="Content\block_yellow.png" />
-    <Content Include="Content\paddleBig.png" />
-    <Content Include="Content\paddleBiger.png" />
-    <Content Include="Content\paddleSmall.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+    <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoGameLibrary\MonoGameLibrary.csproj">

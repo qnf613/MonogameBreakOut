@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGameLibrary.Util;
 
 namespace BreakOut1
 {
@@ -13,29 +12,25 @@ namespace BreakOut1
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        InputHandler input;
-        GameConsole console;
-
-        Paddle paddle;
+        Block b;
         Ball ball;
 
-        
+        Paddle paddle;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            input = new InputHandler(this);
-            console = new GameConsole(this);
-
-            this.Components.Add(console);
+            b = new Block(this);
+            this.Components.Add(b);
 
             ball = new Ball(this);
             this.Components.Add(ball);
+
             paddle = new Paddle(this, ball);
             this.Components.Add(paddle);
-
+            
         }
 
         /// <summary>
@@ -60,9 +55,8 @@ namespace BreakOut1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            this.Components.Add(input);
-            this.ball.Location = new Vector2(200, 300);
-            this.paddle.Location = new Vector2(300, 450);
+            // TODO: use this.Content to load your game content here
+            
         }
 
         /// <summary>
@@ -85,7 +79,7 @@ namespace BreakOut1
                 Exit();
 
             // TODO: Add your update logic here
-
+            
             base.Update(gameTime);
         }
 
