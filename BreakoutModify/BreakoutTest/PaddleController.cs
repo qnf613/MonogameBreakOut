@@ -41,7 +41,20 @@ namespace BreakoutTest
             if (input.KeyboardState.WasKeyPressed(Keys.Up))
             {
                 if (ball.State == BallState.OnPaddleStart) //Only Launch Ball is it's on paddle
-                    this.ball.LaunchBall(gametime);
+                {
+                    if (this.Direction.X == 0)
+                    {
+                        Random r = new Random();
+                        float randomX = r.Next(-1, 1);
+                        if (randomX >= 0)
+                        {
+                            randomX = 1;
+                        }
+                        this.ball.LaunchBall(gametime, new Vector2(randomX, this.Direction.Y));
+                    }
+                    else
+                    this.ball.LaunchBall(gametime, this.Direction); 
+                }
             }
         }
     }

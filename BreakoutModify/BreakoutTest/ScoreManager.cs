@@ -19,7 +19,8 @@ namespace BreakoutTest
         public static int Lives;
         public static int Level;
         public static int Score;
-
+        int lilpaddlesX;
+        int lilpaddlesY;
         Texture2D paddle;
 
         SpriteBatch sb;
@@ -32,7 +33,7 @@ namespace BreakoutTest
             SetupNewGame();
         }
 
-        private static void SetupNewGame()
+        public static void SetupNewGame()
         {
             Lives = 3;
             Level = 1;
@@ -44,9 +45,11 @@ namespace BreakoutTest
             sb = new SpriteBatch(this.Game.GraphicsDevice);
             font = this.Game.Content.Load<SpriteFont>("Arial");
             paddle = this.Game.Content.Load<Texture2D>("paddleSmall");
-            livesLoc = new Vector2(10, 10);
-            levelLoc = new Vector2(300, 10);
-            scoreLoc = new Vector2(400, 10);
+            livesLoc = new Vector2(this.GraphicsDevice.Viewport.Width / 25, this.GraphicsDevice.Viewport.Width / 50);
+            levelLoc = new Vector2(this.GraphicsDevice.Viewport.Width / 2.5f, this.GraphicsDevice.Viewport.Width / 50);
+            scoreLoc = new Vector2(this.GraphicsDevice.Viewport.Width / 1.3f, this.GraphicsDevice.Viewport.Width / 50);
+            lilpaddlesX = this.GraphicsDevice.Viewport.Width / 8;
+            lilpaddlesY = this.GraphicsDevice.Viewport.Width / 45;
             base.LoadContent();
         }
 

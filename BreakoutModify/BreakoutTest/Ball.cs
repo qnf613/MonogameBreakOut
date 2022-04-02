@@ -12,9 +12,9 @@ using MonoGameLibrary.Util;
 
 namespace BreakoutTest
 {
-    enum BallState {  OnPaddleStart, Playing }
+    public enum BallState {  OnPaddleStart, Playing }
 
-    class Ball : DrawableSprite
+    public class Ball : DrawableSprite
     {
         
         public BallState State { get; private set; }
@@ -39,13 +39,14 @@ namespace BreakoutTest
 
         public void SetInitialLocation()
         {
-            this.Location = new Vector2(200, 300);
+            this.Location = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 10);
         }
 
-        public void LaunchBall(GameTime gameTime)
+        public void LaunchBall(GameTime gameTime, Vector2 d)
         {
-            this.Speed = 190;
-            this.Direction = new Vector2(1, -1);
+            d += Vector2.UnitY;
+            this.Speed = 150 + (ScoreManager.Level + 1) * 10;
+            this.Direction = d;
             this.State =  BallState.Playing;
             this.console.GameConsoleWrite("Ball Launched " + gameTime.TotalGameTime.ToString());
         }
@@ -57,7 +58,7 @@ namespace BreakoutTest
             base.LoadContent();
         }
 
-        private void resetBall(GameTime gameTime)
+        public void resetBall(GameTime gameTime)
         {
             this.Speed = 0;
             this.State =  BallState.OnPaddleStart;
@@ -95,6 +96,7 @@ namespace BreakoutTest
             if (this.Location.Y + this.spriteTexture.Height > this.Game.GraphicsDevice.Viewport.Height)
             {
                 this.resetBall(gameTime);
+                ScoreManager.Lives--;
             }
 
             //Top
@@ -104,9 +106,31 @@ namespace BreakoutTest
             }
         }
 
-        public void Reflect(Block block)
+        public void Reflect(MonogameBlock block)
         {
-            this.Direction.Y *= -1; //TODO check for side collision with block
+            if (Rectagle.Intersects(block.LocationRect))
+            {
+                //TODO check for side collision with block
+                if (this.Location.X < block.Location.X)
+                {
+                    this.Direction.X *= -1;
+                    console.GameConsoleWrite("left");
+                }
+                if (this.Location.X >= block.Location.X + block.spriteTexture.Width / 4)
+                {
+                    this.Direction.X *= -1;
+                    console.GameConsoleWrite("right");
+                }
+                if(this.Location.Y < block.Location.Y)
+                { 
+                    this.Direction.Y *= -1; console.GameConsoleWrite("up"); 
+                }
+                if (this.Location.Y >= block.Location.Y + block.spriteTexture.Height / 4)
+                {
+                    this.Direction.Y *= -1;
+                    console.GameConsoleWrite("below");
+                }
+            }
         }
 
     }

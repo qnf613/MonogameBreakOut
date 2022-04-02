@@ -1,0 +1,26 @@
+Modification Description (Requirements excluded), Changes / Reasoning form:
+	Level + Win/Lose condition; Each level will have [level] line(s) of blocks. 1 line has 24* blocks. *(hardcoded). / Encourages the player to go higher level.  
+	Comeback system; When player has 1 live only, paddle becomes bigger and if player win the level, player recover 1 live (still, maximum lives is 3). / Relief system for players. Prevents players from being frustrated.
+
+
+Structural Changes (Requirements excluded):
+new class; 
+	WinLose - To manage win/lose/neutral[in playing state] states, notice when player clear the game (max level of game is 10 for now)
+
+modified classes; 
+	Block manager - I thought the most basic form of a breakout game is a single line of blocks that filled the screen horizontally. So I fill the width of the screen but then add more lines depending on the level.
+
+	Paddle - Simply, change the sprite depending on remain lives. Also, to prevent 'straight-line clear*', it sends random direction to launch the ball if player start the level without other input.
+	(*This technic has a problem that unless the player purposely misses the ball, there is no way the player can change the X direction of the ball.)
+
+	Ball - The class that modified the most. I modified the calculation formula of the Reflect method from "transforming the Y value in the event of a collision" to 
+	"calculate contact for each of the four sides of the block separately and then apply bounce to the opposite direction of the contact." 
+	However, what I do not think is a perfect solution is that when the ball hits the block from the bottom, sometimes the reflection of the x value also occurs.
+
+
+State Changes:
+	There are no additions/changes other than the game's clear status [win/lose/neutral] which I mentioned several times above.
+
+
+Maintainability: It can be changed something further at any time. The only concern is the problem of a little uncertainty (it's not a serious/game stop problem) in the contact between the block and the ball I mentioned above. 
+	Therefore, I don't think there are any major technical defects at the moment.

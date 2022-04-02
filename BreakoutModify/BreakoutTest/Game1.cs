@@ -22,6 +22,7 @@ namespace BreakoutTest
         BlockManager bm;
         Paddle paddle;
         Ball ball;
+        WinLose wl;
 
         ScoreManager score;
 

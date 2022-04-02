@@ -15,20 +15,21 @@ namespace BreakoutTest
     {
         //Service Dependencies
         GameConsole console;
-
+        Texture2D small, big;
         //Dependencies
         PaddleController controller;
         Ball ball;      //Need reference to ball for collision
-        
+
         public Paddle(Game game, Ball b)
             : base(game)
         {
-            this.Speed = 200;
+            this.Speed = 350;
             this.ball = b;
             controller = new PaddleController(game, ball);
 
+            //Lazy load GameConsole
             console = (GameConsole)this.Game.Services.GetService(typeof(IGameConsole));
-            if (console == null) //ohh no no console
+            if (console == null) //ohh no no console, make a new one and add it to the game
             {
                 console = new GameConsole(this.Game);
                 this.Game.Components.Add(console);  //add a new game console to Game
@@ -39,7 +40,9 @@ namespace BreakoutTest
 
         protected override void LoadContent()
         {
-            this.spriteTexture = this.Game.Content.Load<Texture2D>("paddleSmall");
+            this.spriteTexture = this.Game.Content.Load<Texture2D>("paddleSmall"); //paddleBig
+            small = this.spriteTexture;
+            big = this.Game.Content.Load<Texture2D>("paddleBig"); //paddleSmall
 #if DEBUG
             this.ShowMarkers = true;
 #endif
@@ -59,7 +62,7 @@ namespace BreakoutTest
         {
             //Update Collision Rect
             collisionRectangle = new Rectangle((int)this.Location.X, (int)this.Location.Y, this.spriteTexture.Width, 1);
-
+            UpdateSizeOfPaddle();
             //Deal with ball
             switch (ball.State)
             {
@@ -85,7 +88,7 @@ namespace BreakoutTest
         {
             ball.Speed = 0;
             ball.Direction = Vector2.Zero;
-            ball.Location = new Vector2(this.Location.X + (this.LocationRect.Width/2 - ball.SpriteTexture.Width/2), this.Location.Y - ball.SpriteTexture.Height);
+            ball.Location = new Vector2(this.Location.X + (this.LocationRect.Width / 2 - ball.SpriteTexture.Width / 2), this.Location.Y - ball.SpriteTexture.Height);
         }
 
         private void UpdateCheckBallCollision()
@@ -103,6 +106,14 @@ namespace BreakoutTest
         }
 
         Random r;
+
+        void UpdateSizeOfPaddle()
+        {
+            if (ScoreManager.Lives <= 1)
+            {
+                this.spriteTexture = big;
+            }
+        }
 
         private void UpdateBallCollisionRandomFuness()
         {
